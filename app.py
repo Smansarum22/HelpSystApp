@@ -1,4 +1,4 @@
-# Description: This program detects if someone has diabetes using machine learning and python
+# Description: This program visualize health data and social determinants of health using machine learning and python
 
 # Import the libraries
 from sklearn.metrics import accuracy_score
@@ -16,7 +16,7 @@ Detect health problem in a population using machine learning and python
 """)
 
 # Open and display an image
-image = Image.open('D:/Kuliah/Lomba/Hackathon Microsoft/hack.jpeg')
+image = Image.open('hack.jpeg')
 st.image(image, caption='ML', use_column_width=True)
 
 # Get the data
