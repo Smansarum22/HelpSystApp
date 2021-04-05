@@ -8,6 +8,7 @@ from PIL import Image
 import pandas as pd
 import streamlit as st
 
+pylint: disable=E1120
 
 # Create a title and a sub-title
 st.write("""
