@@ -20,7 +20,7 @@ image = Image.open('D:/Kuliah/Lomba/Hackathon Microsoft/hack.jpeg')
 st.image(image, caption='ML', use_column_width=True)
 
 # Get the data
-df = pd.read_csv('D:/Kuliah/Lomba/Hackathon Microsoft/2017.csv')
+df = pd.read_csv('2017.csv')
 # Set a subheader
 st.subheader('Data Information :')
 # Show the data as a table
