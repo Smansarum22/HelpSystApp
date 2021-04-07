@@ -1,0 +1,50 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - health-web-app
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: https://helpsystappregistry.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_d69bbef639c14f4d8411559775e91139 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_f9b4809f8a954cd7900376d85ebe0ee9 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2.2.1
+      with:
+        push: true
+        tags: helpsyst-app:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'health-web-app'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e58c29cb73d0445b81380a742f1e937f }}
+        images: 'helpsystappregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d69bbef639c14f4d8411559775e91139 }}/helpsyst-app:${{ github.sha }}'
