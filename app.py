@@ -12,7 +12,7 @@ pylint: disable=E1120
 
 # Create a title and a sub-title
 st.write("""
-# Health Program Recommender System
+# Health Program Recommender System App
 Detect health problem in a population using machine learning and python
 """)
 
